@@ -1,0 +1,173 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1ru08877g5xt"]
+
+[ext_resource type="Script" path="res://levels/worm.gd" id="1_a01cm"]
+[ext_resource type="Texture2D" uid="uid://deqja7lo6d2of" path="res://res/ball.png" id="1_tatag"]
+[ext_resource type="Script" path="res://levels/pj1_area.gd" id="3_o1cgv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kjyhi"]
+radius = 7.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k1p2n"]
+radius = 3.0
+height = 6.0
+
+[node name="worm" type="Node2D"]
+script = ExtResource("1_a01cm")
+
+[node name="head" type="RigidBody2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+continuous_cd = 2
+contact_monitor = true
+
+[node name="Ball" type="Sprite2D" parent="head"]
+position = Vector2(-0.125, 0)
+scale = Vector2(0.445313, 0.453125)
+texture = ExtResource("1_tatag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="head"]
+shape = SubResource("CircleShape2D_kjyhi")
+
+[node name="pj1" type="PinJoint2D" parent="."]
+position = Vector2(5, 0)
+node_a = NodePath("../head")
+node_b = NodePath("../chain")
+
+[node name="pj1_area" type="Area2D" parent="pj1"]
+script = ExtResource("3_o1cgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pj1/pj1_area"]
+shape = SubResource("CapsuleShape2D_k1p2n")
+
+[node name="chain" type="RigidBody2D" parent="."]
+position = Vector2(11, 0)
+collision_layer = 3
+collision_mask = 3
+continuous_cd = 2
+contact_monitor = true
+metadata/_edit_group_ = true
+
+[node name="Ball" type="Sprite2D" parent="chain"]
+scale = Vector2(0.453, 0.453)
+texture = ExtResource("1_tatag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain"]
+shape = SubResource("CircleShape2D_kjyhi")
+
+[node name="pj2" type="PinJoint2D" parent="."]
+position = Vector2(17, 0)
+node_a = NodePath("../chain")
+node_b = NodePath("../chain2")
+
+[node name="chain2" type="RigidBody2D" parent="."]
+position = Vector2(22, 0)
+collision_layer = 3
+collision_mask = 3
+continuous_cd = 2
+contact_monitor = true
+metadata/_edit_group_ = true
+
+[node name="Ball" type="Sprite2D" parent="chain2"]
+scale = Vector2(0.453, 0.453)
+texture = ExtResource("1_tatag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain2"]
+shape = SubResource("CircleShape2D_kjyhi")
+
+[node name="pj3" type="PinJoint2D" parent="."]
+position = Vector2(28, 0)
+node_a = NodePath("../chain2")
+node_b = NodePath("../chain3")
+
+[node name="chain3" type="RigidBody2D" parent="."]
+position = Vector2(33, 0)
+collision_layer = 3
+collision_mask = 3
+continuous_cd = 2
+contact_monitor = true
+metadata/_edit_group_ = true
+
+[node name="Ball" type="Sprite2D" parent="chain3"]
+scale = Vector2(0.453, 0.453)
+texture = ExtResource("1_tatag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain3"]
+shape = SubResource("CircleShape2D_kjyhi")
+
+[node name="pj4" type="PinJoint2D" parent="."]
+position = Vector2(40, 0)
+node_a = NodePath("../chain3")
+node_b = NodePath("../chain4")
+
+[node name="chain4" type="RigidBody2D" parent="."]
+position = Vector2(45, 0)
+collision_layer = 3
+collision_mask = 3
+continuous_cd = 2
+contact_monitor = true
+metadata/_edit_group_ = true
+
+[node name="Ball" type="Sprite2D" parent="chain4"]
+scale = Vector2(0.453, 0.453)
+texture = ExtResource("1_tatag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain4"]
+shape = SubResource("CircleShape2D_kjyhi")
+
+[node name="pj5" type="PinJoint2D" parent="."]
+position = Vector2(51, 0)
+node_a = NodePath("../chain4")
+node_b = NodePath("../chain5")
+
+[node name="chain5" type="RigidBody2D" parent="."]
+position = Vector2(55, 0)
+collision_layer = 3
+collision_mask = 3
+continuous_cd = 2
+contact_monitor = true
+metadata/_edit_group_ = true
+
+[node name="Ball" type="Sprite2D" parent="chain5"]
+scale = Vector2(0.453, 0.453)
+texture = ExtResource("1_tatag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain5"]
+shape = SubResource("CircleShape2D_kjyhi")
+
+[node name="pj6" type="PinJoint2D" parent="."]
+position = Vector2(61, 0)
+node_a = NodePath("../chain5")
+node_b = NodePath("../chain6")
+
+[node name="chain6" type="RigidBody2D" parent="."]
+position = Vector2(65, 0)
+collision_layer = 3
+collision_mask = 3
+continuous_cd = 2
+contact_monitor = true
+metadata/_edit_group_ = true
+
+[node name="Ball" type="Sprite2D" parent="chain6"]
+scale = Vector2(0.453, 0.453)
+texture = ExtResource("1_tatag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain6"]
+shape = SubResource("CircleShape2D_kjyhi")
+
+[node name="pj7" type="PinJoint2D" parent="."]
+position = Vector2(71, 0)
+node_a = NodePath("../chain6")
+node_b = NodePath("../chain7")
+
+[node name="chain7" type="RigidBody2D" parent="."]
+position = Vector2(76, 0)
+collision_layer = 3
+collision_mask = 3
+metadata/_edit_group_ = true
+
+[node name="Ball" type="Sprite2D" parent="chain7"]
+scale = Vector2(0.456083, 0.453)
+texture = ExtResource("1_tatag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chain7"]
+shape = SubResource("CircleShape2D_kjyhi")

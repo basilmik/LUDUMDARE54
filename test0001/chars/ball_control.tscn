@@ -1,0 +1,43 @@
+[gd_scene load_steps=10 format=3 uid="uid://c40fgibx1c2mj"]
+
+[ext_resource type="Texture2D" uid="uid://deqja7lo6d2of" path="res://res/ball.png" id="1_ixlrb"]
+[ext_resource type="Script" path="res://chars/ball_control.gd" id="1_sh8yn"]
+[ext_resource type="Script" path="res://chars/bc_marker.gd" id="2_12vaa"]
+[ext_resource type="Texture2D" uid="uid://d1142hp3x7rbm" path="res://res/small_ball.png" id="4_5l3ev"]
+[ext_resource type="Script" path="res://chars/StickJoint.gd" id="4_flhgr"]
+[ext_resource type="Texture2D" uid="uid://b7rxoyailgdnw" path="res://res/stick_joint.png" id="5_yqbpd"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4fvbp"]
+rough = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m202b"]
+radius = 22.0227
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4d8f7"]
+size = Vector2(29, 4)
+
+[node name="ball_control" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_4fvbp")
+script = ExtResource("1_sh8yn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m202b")
+
+[node name="Ball" type="Sprite2D" parent="."]
+scale = Vector2(1.375, 1.40625)
+texture = ExtResource("1_ixlrb")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(14.5, 0)
+shape = SubResource("RectangleShape2D_4d8f7")
+
+[node name="StickJoint" type="Sprite2D" parent="."]
+position = Vector2(25, 0)
+texture = ExtResource("5_yqbpd")
+script = ExtResource("4_flhgr")
+
+[node name="bc_marker" type="Marker2D" parent="."]
+script = ExtResource("2_12vaa")
+
+[node name="SmallBall" type="Sprite2D" parent="bc_marker"]
+texture = ExtResource("4_5l3ev")

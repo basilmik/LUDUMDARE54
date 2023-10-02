@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://cw5gwyre6qoid"]
+
+[ext_resource type="Script" path="res://robot.gd" id="1_5m142"]
+[ext_resource type="Texture2D" uid="uid://deqja7lo6d2of" path="res://res/ball.png" id="1_06pfj"]
+[ext_resource type="Texture2D" uid="uid://b7rxoyailgdnw" path="res://res/stick_joint.png" id="2_xs141"]
+[ext_resource type="Texture2D" uid="uid://d1142hp3x7rbm" path="res://res/small_ball.png" id="3_80yyb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mxqgt"]
+bounce = 0.3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2b7mq"]
+radius = 11.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lreds"]
+radius = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_owstm"]
+size = Vector2(16, 4)
+
+[node name="robot" type="RigidBody2D"]
+collision_layer = 3
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_mxqgt")
+contact_monitor = true
+script = ExtResource("1_5m142")
+
+[node name="Ball" type="Sprite2D" parent="."]
+scale = Vector2(1.47656, 1.47656)
+texture = ExtResource("1_06pfj")
+
+[node name="SmallBall" type="Sprite2D" parent="."]
+position = Vector2(-2.38419e-07, 2.38419e-07)
+scale = Vector2(1.375, 1.375)
+texture = ExtResource("3_80yyb")
+
+[node name="BigBall_cs" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_2b7mq")
+
+[node name="Marker" type="Marker2D" parent="."]
+
+[node name="SmallBall2" type="Sprite2D" parent="Marker"]
+scale = Vector2(0.28125, 0.28125)
+texture = ExtResource("3_80yyb")
+
+[node name="End_area" type="Area2D" parent="Marker"]
+
+[node name="End_cs" type="CollisionShape2D" parent="Marker/End_area"]
+shape = SubResource("CircleShape2D_lreds")
+
+[node name="Arm" type="Sprite2D" parent="."]
+position = Vector2(8, 0)
+texture = ExtResource("2_xs141")
+
+[node name="Arm_cs" type="CollisionShape2D" parent="."]
+position = Vector2(8, 0)
+shape = SubResource("RectangleShape2D_owstm")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="body_shape_entered" from="Marker/End_area" to="." method="_on_end_area_body_shape_entered"]

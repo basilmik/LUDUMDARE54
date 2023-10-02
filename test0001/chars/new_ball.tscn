@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3443d447t40y"]
+
+[ext_resource type="Texture2D" uid="uid://deqja7lo6d2of" path="res://res/ball.png" id="1_8eee0"]
+[ext_resource type="Texture2D" uid="uid://d1142hp3x7rbm" path="res://res/small_ball.png" id="2_abj22"]
+[ext_resource type="Texture2D" uid="uid://b7rxoyailgdnw" path="res://res/stick_joint.png" id="3_7egkp"]
+
+[sub_resource type="GDScript" id="GDScript_3kj6o"]
+script/source = "extends RigidBody2D
+
+const rolling_force:float = 80.0
+
+var small_ball: Sprite2D
+var stick_joint: Sprite2D
+var stick_joint_cs: CollisionShape2D
+var big_ball_cs: CollisionShape2D
+var big_ball: Sprite2D
+var scaling_q: int = 2
+
+func _ready():
+
+	mass = 10
+
+	small_ball = get_node(\"SmallBall\")
+	stick_joint_cs = get_node(\"arm_cs\")
+
+	stick_joint = get_node(\"StickJoint\")
+	big_ball_cs = get_node(\"BigBall\")
+	big_ball = get_node(\"Ball\")
+	stick_joint.scale.x *= scaling_q
+	stick_joint_cs.scale.x *= scaling_q
+
+
+	
+func _physics_process(delta):
+	if Input.is_action_pressed(\"left_a\"):		
+		set_angular_velocity(get_angular_velocity() - rolling_force*delta)
+	else:
+		if Input.is_action_pressed(\"right_d\"):
+			set_angular_velocity(get_angular_velocity() + rolling_force*delta)
+		else:
+			set_angular_velocity(0)
+			
+	var rads = (big_ball.global_position - get_global_mouse_position()).angle()
+	var angl = rad_to_deg(rads) + 180
+	
+	var x = big_ball.global_position.x - scaling_q*10*cos(rads)
+	var y = big_ball.global_position.y - scaling_q*10*sin(rads)
+	stick_joint.global_position = Vector2(x,y)
+	stick_joint_cs.global_position = Vector2(x,y)
+	
+	stick_joint.look_at(get_global_mouse_position())
+	stick_joint_cs.look_at(get_global_mouse_position())
+	small_ball.look_at(get_global_mouse_position())
+	
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yiuno"]
+radius = 16.0312
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_modda"]
+size = Vector2(13.5, 4)
+
+[node name="new_ball" type="RigidBody2D"]
+script = SubResource("GDScript_3kj6o")
+
+[node name="BigBall" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yiuno")
+
+[node name="Ball" type="Sprite2D" parent="."]
+texture = ExtResource("1_8eee0")
+
+[node name="SmallBall" type="Sprite2D" parent="."]
+texture = ExtResource("2_abj22")
+
+[node name="StickJoint" type="Sprite2D" parent="."]
+position = Vector2(23, 0)
+texture = ExtResource("3_7egkp")
+
+[node name="arm_cs" type="CollisionShape2D" parent="." groups=["arm"]]
+position = Vector2(20.5, 0)
+shape = SubResource("RectangleShape2D_modda")
